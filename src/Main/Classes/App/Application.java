@@ -2,6 +2,7 @@ package Main.Classes.App;
 
 import Main.Classes.Gen.Users;
 import Main.Classes.Spec.Administrator;
+import Main.Classes.Util.Input;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,50 @@ public class Application {
         if (!initialized) {
             root.createAccount();
             initialized = true;
+        }
+    }
+
+    public static void MainMenu() {
+        while (true) {
+            System.out.println("Welcome To The Main Menu!");
+
+            switch (Input.getInput("""
+                    0. Exit
+                    1. Login
+                                    
+                    """, "Option")) {
+                case "0" -> {
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                }
+                case "1" -> Login();
+                default -> {
+                    System.out.println("Invalid Input!");
+                    System.out.printf("%n%s%n", "=".repeat(50));
+                }
+            }
+        }
+    }
+
+    private static void Login() {
+        System.out.println("Welcome To The Login Menu!");
+
+        String username = Input.getInput("", "Username");
+        String password = Input.getInput("", "Password");
+
+        boolean loggedIn = false;
+
+        for (Users user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                loggedIn = true;
+                System.out.println("Login Successful!");
+                user.MainMenu();
+            }
+        }
+
+        if (!loggedIn) {
+            System.out.println("Login Failed!");
+            System.out.printf("%n%s%n", "=".repeat(50));
         }
     }
 }

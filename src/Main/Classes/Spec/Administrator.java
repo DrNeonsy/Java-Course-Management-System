@@ -3,10 +3,22 @@ package Main.Classes.Spec;
 import Main.Classes.Gen.Users;
 import Main.Classes.Util.Input;
 
+import java.util.ArrayList;
+
 import static Main.Classes.App.Application.users;
 import static Main.Classes.Util.Util.isValidEnum;
 
 public class Administrator extends Users {
+    public static final ArrayList<String> options = new ArrayList<>(Teacher.options) {
+        {
+            add("6. Show All Courses");
+            add("7. Show All Users");
+            add("8. Create Account");
+            add("9. Delete Account");
+            add("10. Create Course");
+            add("11. Delete Course");
+        }
+    };
     private static boolean isRoot = true; // False After Root Creation / Startup
     // ----------------------------------------
     // Attributes

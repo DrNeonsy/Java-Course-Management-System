@@ -1,5 +1,6 @@
 package Main.Classes.Gen;
 
+import Main.Classes.Spec.*;
 import Main.Classes.Util.Input;
 
 public abstract class Users implements Main.Interfaces.Users {
@@ -18,48 +19,40 @@ public abstract class Users implements Main.Interfaces.Users {
     // ----------------------------------------
     public Users() {
     }
+
     // ----------------------------------------
     // Methods
     // ----------------------------------------
 
-    // ----------------------------------------
-    // Getters and Setters
-    // ----------------------------------------
+    public void MainMenu() {
+        // Start With Greeting The User
+        System.out.printf("%n%s%n", "=".repeat(50));
+        System.out.printf("%s %s, Welcome To The Main Menu!%n", this.name, this.surname);
+        System.out.printf("%n%s%n", "=".repeat(50));
 
-    public void setName() {
-        System.out.println("Setup For Name Initiated!\n");
+        // Then Show The Options
 
-        setTree(1);
-    }
-
-    public void setSurname() {
-        System.out.println("Setup For Surname Initiated!\n");
-
-        setTree(2);
-    }
-
-    public void setEmail() {
-        System.out.println("Setup For Email Initiated!\n");
-
-        setTree(3);
-    }
-
-    public void setPassword() {
-        System.out.println("Setup For Password Initiated!\n");
-
-        setTree(4);
-    }
-
-    public void setUsername() {
-        System.out.println("Setup For Username Initiated!\n");
-
-        setTree(5);
-    }
-
-    public void setRole() {
-        System.out.println("Setup For Role Initiated!\n");
-
-        setTree(6);
+        // If The User Is An Administrator
+        if (this instanceof Administrator) {
+            // Show The Administrator Options
+            for (String option : Administrator.options) {
+                System.out.println(option);
+            }
+        }
+        // If The User Is A Teacher
+        else if (this instanceof Teacher) {
+            // Show The Teacher Options
+            for (String option : Teacher.options) {
+                System.out.println(option);
+            }
+        }
+        // If The User Is A Student
+        else if (this instanceof Student) {
+            // Show The Student Options
+            for (String option : Student.options) {
+                System.out.println(option);
+            }
+        }
     }
 
     private void setTree(int mode) {
@@ -138,5 +131,98 @@ public abstract class Users implements Main.Interfaces.Users {
             System.out.println("Incorrect Input! Please Try Again!");
             System.out.printf("%n%s%n", "=".repeat(50));
         }
+    }
+
+    // ----------------------------------------
+    // Getters and Setters
+    // ----------------------------------------
+
+    // region Setters
+
+    public void setName() {
+        System.out.println("Setup For Name Initiated!\n");
+
+        setTree(1);
+    }
+
+    public void setSurname() {
+        System.out.println("Setup For Surname Initiated!\n");
+
+        setTree(2);
+    }
+
+    public void setEmail() {
+        System.out.println("Setup For Email Initiated!\n");
+
+        setTree(3);
+    }
+
+    public void setPassword() {
+        System.out.println("Setup For Password Initiated!\n");
+
+        setTree(4);
+    }
+
+    public void setUsername() {
+        System.out.println("Setup For Username Initiated!\n");
+
+        setTree(5);
+    }
+
+    public void setRole() {
+        System.out.println("Setup For Role Initiated!\n");
+
+        setTree(6);
+    }
+
+    //endregion
+
+    // region Getters
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    // endregion
+
+    // ----------------------------------------
+    // ToString
+    // ----------------------------------------
+    @Override
+    public String toString() {
+        return String.format("""
+                        Name: %s
+                        Surname: %s
+                        Email: %s
+                        Password: %s
+                        Username: %s
+                        Role: %s
+                        """,
+                this.getName(),
+                this.getSurname(),
+                this.getEmail(),
+                this.getPassword(),
+                this.getUsername(),
+                this.getRole());
     }
 }
