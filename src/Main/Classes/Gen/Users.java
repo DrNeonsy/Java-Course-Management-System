@@ -1,8 +1,13 @@
 package Main.Classes.Gen;
 
-import Main.Classes.Spec.*;
+import Main.Classes.Spec.Administrator;
+import Main.Classes.Spec.Student;
+import Main.Classes.Spec.Teacher;
 import Main.Classes.Util.Input;
+import Main.Data.Courses;
 import Main.Interfaces.IUsers;
+
+import static Main.Classes.App.Application.courses;
 
 public abstract class Users implements IUsers {
     // ----------------------------------------
@@ -124,12 +129,55 @@ public abstract class Users implements IUsers {
 
     @Override
     public void enterCourse() {
-
+        // This Will Show All The Exercises Of Every Course The User Is Enrolled In
+        if (this instanceof Administrator) {
+            for (Courses course : courses) {
+                System.out.println(course);
+                System.out.println(course.assignments());
+            }
+        } else if (this instanceof Student) {
+            for (Courses course : courses) {
+                if (course.students().contains(this)) {
+                    System.out.println(course);
+                    System.out.println(course.assignments());
+                }
+            }
+        } else if (this instanceof Teacher) {
+            for (Courses course : courses) {
+                if (course.teacher().contains(this.getName() + " " + this.getSurname())) {
+                    System.out.println(course);
+                    System.out.println(course.assignments());
+                }
+            }
+        }
     }
 
     @Override
     public void showCourseMembers() {
+        if (this instanceof Administrator) { // Show Members Of Every Course
+            for (Courses course : courses) {
+                System.out.println(course);
+                System.out.println(course.students());
+            }
 
+        } else if (this instanceof Student) {
+
+            for (Courses course : courses) {
+                if (course.students().contains(this)) {
+                    System.out.println(course);
+                    System.out.println(course.students());
+                }
+            }
+
+        } else if (this instanceof Teacher) {
+
+            for (Courses course : courses) {
+                if (course.teacher().contains(this.getName() + " " + this.getSurname())) {
+                    System.out.println(course);
+                    System.out.println(course.students());
+                }
+            }
+        }
     }
 
 

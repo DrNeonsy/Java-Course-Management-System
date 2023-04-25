@@ -3,6 +3,7 @@ package Main.Classes.App;
 import Main.Classes.Gen.Users;
 import Main.Classes.Spec.Administrator;
 import Main.Classes.Util.Input;
+import Main.Data.Courses;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Application {
     // ----------------------------------------
     private static final Administrator root = new Administrator();
     public static final ArrayList<Users> users = new ArrayList<>();
+    public static final ArrayList<Courses> courses = new ArrayList<>();
     private static boolean initialized = false;
 
     // ----------------------------------------

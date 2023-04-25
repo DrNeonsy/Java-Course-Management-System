@@ -2,10 +2,12 @@ package Main.Classes.Spec;
 
 import Main.Classes.Gen.Users;
 import Main.Classes.Util.Input;
+import Main.Data.Courses;
 import Main.Interfaces.IAdmins;
 
 import java.util.ArrayList;
 
+import static Main.Classes.App.Application.courses;
 import static Main.Classes.App.Application.users;
 import static Main.Classes.Util.Util.isValidEnum;
 
@@ -39,7 +41,9 @@ public class Administrator extends Teacher implements IAdmins {
 
     @Override
     public void showAllCourses() {
-
+        for (Courses course : courses) {
+            System.out.println(course);
+        }
     }
 
     @Override
@@ -47,16 +51,6 @@ public class Administrator extends Teacher implements IAdmins {
         for (Users user : users) {
             System.out.println(user);
         }
-    }
-
-    @Override
-    public void createCourse() {
-
-    }
-
-    @Override
-    public void deleteCourse() {
-
     }
 
     @Override
@@ -90,9 +84,6 @@ public class Administrator extends Teacher implements IAdmins {
         System.out.println("Account Deleted!");
     }
 
-    // ----------------------------------------
-    // Create Account
-    // ----------------------------------------
     public void createAccount() {
         System.out.println("Account Setup Initiated!");
 
@@ -149,5 +140,15 @@ public class Administrator extends Teacher implements IAdmins {
                 System.out.println("\nInvalid Input!\n");
             }
         }
+    }
+
+    @Override
+    public void createCourse() {
+
+    }
+
+    @Override
+    public void deleteCourse() {
+
     }
 }
