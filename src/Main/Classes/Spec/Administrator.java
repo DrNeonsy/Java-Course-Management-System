@@ -16,7 +16,7 @@ public class Administrator extends Teacher implements IAdmins {
     public static final ArrayList<String> options = new ArrayList<>(Teacher.options) {
         {
             add("8. Show All Courses");
-            add("9. Show All IUsers");
+            add("9. Show All Users");
             add("10. Create Account");
             add("11. Delete Account");
             add("12. Create Course");
@@ -44,12 +44,9 @@ public class Administrator extends Teacher implements IAdmins {
 
     @Override
     public void showAllUsers() {
-
-    }
-
-    @Override
-    public void deleteAccount() {
-
+        for (Users user : users) {
+            System.out.println(user);
+        }
     }
 
     @Override
@@ -60,6 +57,37 @@ public class Administrator extends Teacher implements IAdmins {
     @Override
     public void deleteCourse() {
 
+    }
+
+    @Override
+    public void deleteAccount() {
+        // Print An Indexed List Of All Users With Their Name, Surname And Role
+        for (int i = 1; i < users.size(); i++) {
+            System.out.printf("%d. %s %s (%s)%n", i, users.get(i).getName(), users.get(i).getSurname(), users.get(i).getRole());
+        }
+
+        int option;
+
+        while (true) {
+            String input = Input.getInput("", "Option");
+
+            if (input.length() == 0) {
+                return;
+            }
+
+            if (Input.isNumInput(input)) {
+                option = Integer.parseInt(input);
+                if (option >= 1 && option < users.size()) {
+                    break;
+                }
+            }
+            System.out.println("Invalid Input!");
+        }
+
+        System.out.printf("%n%s %s (%s)%n%n", users.get(option).getName(), users.get(option).getSurname(), users.get(option).getRole());
+
+        users.remove(option);
+        System.out.println("Account Deleted!");
     }
 
     // ----------------------------------------

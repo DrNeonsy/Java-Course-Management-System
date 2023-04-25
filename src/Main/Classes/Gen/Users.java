@@ -108,6 +108,7 @@ public abstract class Users implements IUsers {
                     case 13 -> a.deleteCourse();
                 }
             }
+            Input.getInput("", "Press Enter To Continue");
         }
         // endregion
     }
@@ -119,7 +120,6 @@ public abstract class Users implements IUsers {
     @Override
     public void showAccountInformation() {
         System.out.println(this);
-        Input.getInput("", "Press Enter To Continue");
     }
 
     @Override
