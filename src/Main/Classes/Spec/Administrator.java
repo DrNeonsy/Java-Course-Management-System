@@ -2,27 +2,28 @@ package Main.Classes.Spec;
 
 import Main.Classes.Gen.Users;
 import Main.Classes.Util.Input;
+import Main.Interfaces.IAdmins;
 
 import java.util.ArrayList;
 
 import static Main.Classes.App.Application.users;
 import static Main.Classes.Util.Util.isValidEnum;
 
-public class Administrator extends Users {
-    public static final ArrayList<String> options = new ArrayList<>(Teacher.options) {
-        {
-            add("6. Show All Courses");
-            add("7. Show All Users");
-            add("8. Create Account");
-            add("9. Delete Account");
-            add("10. Create Course");
-            add("11. Delete Course");
-        }
-    };
-    private static boolean isRoot = true; // False After Root Creation / Startup
+public class Administrator extends Users implements IAdmins {
     // ----------------------------------------
     // Attributes
     // ----------------------------------------
+    public static final ArrayList<String> options = new ArrayList<>(Teacher.options) {
+        {
+            add("8. Show All Courses");
+            add("9. Show All IUsers");
+            add("10. Create Account");
+            add("11. Delete Account");
+            add("12. Create Course");
+            add("13. Delete Course");
+        }
+    };
+    private static boolean isRoot = true; // False After Root Creation / Startup
 
     // ----------------------------------------
     // Constructor
@@ -41,7 +42,7 @@ public class Administrator extends Users {
     public void createAccount() {
         System.out.println("Account Setup Initiated!");
 
-        if (!isRoot) { // Default Execution For All Users Except Root
+        if (!isRoot) { // Default Execution For All IUsers Except Root
             users.add(defineType());
         } else { // Executed Only Once
             users.add(this);
@@ -60,7 +61,7 @@ public class Administrator extends Users {
         System.out.println("Account Created!");
     }
 
-    private Users defineType() {
+    private static Users defineType() {
         enum Type {
             STUDENT,
             TEACHER,

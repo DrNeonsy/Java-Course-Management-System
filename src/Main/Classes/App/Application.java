@@ -58,7 +58,7 @@ public class Application {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
                 System.out.println("Login Successful!");
-                user.MainMenu();
+                user.MainMenu(user);
             }
         }
 

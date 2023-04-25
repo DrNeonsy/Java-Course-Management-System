@@ -2,8 +2,9 @@ package Main.Classes.Gen;
 
 import Main.Classes.Spec.*;
 import Main.Classes.Util.Input;
+import Main.Interfaces.IUsers;
 
-public abstract class Users implements Main.Interfaces.Users {
+public abstract class Users implements IUsers {
     // ----------------------------------------
     // Attributes
     // ----------------------------------------
@@ -24,36 +25,95 @@ public abstract class Users implements Main.Interfaces.Users {
     // Methods
     // ----------------------------------------
 
-    public void MainMenu() {
-        // Start With Greeting The User
-        System.out.printf("%n%s%n", "=".repeat(50));
-        System.out.printf("%s %s, Welcome To The Main Menu!%n", this.name, this.surname);
-        System.out.printf("%n%s%n", "=".repeat(50));
+    // ----------------------------------------
+    // Menu
+    // ----------------------------------------
 
-        // Then Show The Options
+    public void MainMenu(Users user) {
+        boolean exit = false;
+        while (!exit) {
+            // Start With Greeting The User
+            System.out.printf("%n%s%n", "=".repeat(50));
+            System.out.printf("%s %s, Welcome To The Main Menu!%n", this.name, this.surname);
+            System.out.printf("%n%s%n", "=".repeat(50));
 
-        // If The User Is An Administrator
-        if (this instanceof Administrator) {
-            // Show The Administrator Options
-            for (String option : Administrator.options) {
-                System.out.println(option);
+            int optionsLength = 0;
+
+            // region Then Show The Options
+            if (this instanceof Administrator) {
+                optionsLength = Administrator.options.size();
+
+                for (String option : Administrator.options) {
+                    System.out.println(option);
+                }
+            } else if (this instanceof Teacher) {
+                optionsLength = Teacher.options.size();
+
+                for (String option : Teacher.options) {
+                    System.out.println(option);
+                }
+            } else if (this instanceof Student) {
+                optionsLength = Student.options.size();
+
+                for (String option : Student.options) {
+                    System.out.println(option);
+                }
             }
-        }
-        // If The User Is A Teacher
-        else if (this instanceof Teacher) {
-            // Show The Teacher Options
-            for (String option : Teacher.options) {
-                System.out.println(option);
+            // endregion
+
+            int option;
+
+            // region Then Get The User's Input
+            while (true) {
+                String input = Input.getInput("""
+                        Only Numbers Based On
+                        Available Options
+                        Are Allowed
+                                                                
+                        """, "Option");
+
+                if (Input.isNumInput(input)) {
+                    option = Integer.parseInt(input);
+                    if (option >= 0 && option < optionsLength) {
+                        break;
+                    }
+                }
+                System.out.println("Invalid Input!");
             }
-        }
-        // If The User Is A Student
-        else if (this instanceof Student) {
-            // Show The Student Options
-            for (String option : Student.options) {
-                System.out.println(option);
+            // endregion
+
+            // region Then Execute The User's Input
+            switch (option) {
+                case 0 -> {
+                    System.out.println("Exiting...");
+                    exit = true;
+                }
+                case 1 -> showAccountInformation();
+                case 2 -> enterCourse();
+                case 3 -> showCourseMembers();
+                case 4 -> Teacher.createExercise();
+                case 5 -> Teacher.deleteExercise();
+                case 6 -> Teacher.addStudent();
+                case 7 -> Teacher.removeStudent();
+                case 8 -> Administrator.showAllCourses();
+                case 9 -> Administrator.showAllUsers();
+                case 10 -> Administrator.createAccount();
+                case 11 -> Administrator.deleteAccount();
+                case 12 -> Administrator.createCourse();
+                case 13 -> Administrator.deleteCourse();
+                default -> {
+                    System.out.println("Invalid Input!");
+                    System.out.printf("%n%s%n", "=".repeat(50));
+                }
             }
+            // endregion
         }
     }
+
+
+    // ----------------------------------------
+    // Getters and Setters
+    // ----------------------------------------
 
     private void setTree(int mode) {
 
@@ -132,10 +192,6 @@ public abstract class Users implements Main.Interfaces.Users {
             System.out.printf("%n%s%n", "=".repeat(50));
         }
     }
-
-    // ----------------------------------------
-    // Getters and Setters
-    // ----------------------------------------
 
     // region Setters
 
