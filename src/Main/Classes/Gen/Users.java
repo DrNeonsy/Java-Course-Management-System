@@ -66,7 +66,7 @@ public abstract class Users implements IUsers {
             while (true) {
                 String input = Input.getInput("", "Option");
 
-                if (Input.isNumInput(input)) {
+                if (Input.isNumInput(input) && input.length() > 0) {
                     option = Integer.parseInt(input);
                     if (option >= 0 && option < optionsLength) {
                         break;
@@ -119,6 +119,7 @@ public abstract class Users implements IUsers {
     @Override
     public void showAccountInformation() {
         System.out.println(this);
+        Input.getInput("", "Press Enter To Continue");
     }
 
     @Override

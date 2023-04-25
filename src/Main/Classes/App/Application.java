@@ -57,13 +57,14 @@ public class Application {
         for (Users user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
-                System.out.println("Login Successful!");
+                System.out.println("\nLogin Successful!");
                 user.MainMenu();
+                break;
             }
         }
 
         if (!loggedIn) {
-            System.out.println("Login Failed!");
+            System.out.println("\nLogin Failed!");
             System.out.printf("%n%s%n%n", "=".repeat(50));
         }
     }
