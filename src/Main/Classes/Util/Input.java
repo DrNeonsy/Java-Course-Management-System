@@ -4,6 +4,13 @@ import java.util.Scanner;
 
 public class Input {
     // ----------------------------------------
+    // Input Length Check From Min Max
+    // ----------------------------------------
+    public static boolean isLengthInput(String input, int min, int max) {
+        return input.length() >= min && input.length() <= max;
+    }
+
+    // ----------------------------------------
     // Character Only Input
     // ----------------------------------------
     public static boolean isCharInput(String input) {
@@ -31,7 +38,7 @@ public class Input {
     // Email Input
     // ----------------------------------------
     public static boolean isEmailInput(String input) {
-        return input.contains("@") && input.contains(".");
+        return input.matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
 
     // ----------------------------------------
@@ -45,12 +52,13 @@ public class Input {
     }
 
     // ----------------------------------------
-    // Getting Input And Looping Until Valid
+    // Getting Input
     // ----------------------------------------
-    public static String getInput() {
+    public static String getInput(String message, String what) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter your input: ");
+        System.out.printf("%n%s%n", message);
+        System.out.printf("Enter %s: ", what);
         return scanner.nextLine();
     }
 }
