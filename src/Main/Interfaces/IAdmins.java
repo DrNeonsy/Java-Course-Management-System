@@ -1,15 +1,15 @@
 package Main.Interfaces;
 
-public interface IAdmins extends ITeachers {
-    static void showAllCourses();
+public interface IAdmins {
+    void showAllCourses();
 
-    static void showAllUsers();
+    void showAllUsers();
 
-    static void createAccount();
+    void createAccount();
 
-    static void deleteAccount();
+    void deleteAccount();
 
-    static void createCourse();
+    void createCourse();
 
-    static void deleteCourse();
+    void deleteCourse();
 }

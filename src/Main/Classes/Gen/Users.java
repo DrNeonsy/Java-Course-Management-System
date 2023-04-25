@@ -29,13 +29,12 @@ public abstract class Users implements IUsers {
     // Menu
     // ----------------------------------------
 
-    public void MainMenu(Users user) {
-        boolean exit = false;
-        while (!exit) {
+    public void MainMenu() {
+        while (true) {
             // Start With Greeting The User
             System.out.printf("%n%s%n", "=".repeat(50));
-            System.out.printf("%s %s, Welcome To The Main Menu!%n", this.name, this.surname);
-            System.out.printf("%n%s%n", "=".repeat(50));
+            System.out.printf("%s %s, Welcome To The Main Menu!", this.name, this.surname);
+            System.out.printf("%n%s%n%n", "=".repeat(50));
 
             int optionsLength = 0;
 
@@ -65,12 +64,7 @@ public abstract class Users implements IUsers {
 
             // region Then Get The User's Input
             while (true) {
-                String input = Input.getInput("""
-                        Only Numbers Based On
-                        Available Options
-                        Are Allowed
-                                                                
-                        """, "Option");
+                String input = Input.getInput("", "Option");
 
                 if (Input.isNumInput(input)) {
                     option = Integer.parseInt(input);
@@ -82,32 +76,59 @@ public abstract class Users implements IUsers {
             }
             // endregion
 
+            System.out.println();
+
             // region Then Execute The User's Input
             switch (option) {
                 case 0 -> {
                     System.out.println("Exiting...");
-                    exit = true;
+                    return;
                 }
                 case 1 -> showAccountInformation();
                 case 2 -> enterCourse();
                 case 3 -> showCourseMembers();
-                case 4 -> Teacher.createExercise();
-                case 5 -> Teacher.deleteExercise();
-                case 6 -> Teacher.addStudent();
-                case 7 -> Teacher.removeStudent();
-                case 8 -> Administrator.showAllCourses();
-                case 9 -> Administrator.showAllUsers();
-                case 10 -> Administrator.createAccount();
-                case 11 -> Administrator.deleteAccount();
-                case 12 -> Administrator.createCourse();
-                case 13 -> Administrator.deleteCourse();
-                default -> {
-                    System.out.println("Invalid Input!");
-                    System.out.printf("%n%s%n", "=".repeat(50));
+            }
+
+            if (this instanceof Teacher t) {
+                switch (option) {
+                    case 4 -> t.createExercise();
+                    case 5 -> t.deleteExercise();
+                    case 6 -> t.addStudent();
+                    case 7 -> t.removeStudent();
                 }
             }
-            // endregion
+
+            if (this instanceof Administrator a) {
+                switch (option) {
+                    case 8 -> a.showAllCourses();
+                    case 9 -> a.showAllUsers();
+                    case 10 -> a.createAccount();
+                    case 11 -> a.deleteAccount();
+                    case 12 -> a.createCourse();
+                    case 13 -> a.deleteCourse();
+                }
+            }
         }
+        // endregion
+    }
+
+    // ----------------------------------------
+    // Implementing IUsers Interface
+    // ----------------------------------------
+
+    @Override
+    public void showAccountInformation() {
+        System.out.println(this);
+    }
+
+    @Override
+    public void enterCourse() {
+
+    }
+
+    @Override
+    public void showCourseMembers() {
+
     }
 
 
@@ -127,7 +148,7 @@ public abstract class Users implements IUsers {
                             """, "Your Name");
                     if (Input.isLengthInput(input, 2, 20)
                             && Input.isCharInput(input)) {
-                        this.name = input;
+                        this.name = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
                         return;
                     }
                 }
@@ -139,7 +160,7 @@ public abstract class Users implements IUsers {
                             """, "Your Surname");
                     if (Input.isLengthInput(input, 2, 20)
                             && Input.isCharInput(input)) {
-                        this.surname = input;
+                        this.surname = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
                         return;
                     }
                 }
@@ -157,6 +178,18 @@ public abstract class Users implements IUsers {
                 }
                 case 4 -> {
                     String input = Input.getInput("""
+                            Only Letters And Numbers Are Allowed
+                            Min 5 Max 20
+                                                        
+                            """, "Your Username");
+                    if (Input.isLengthInput(input, 5, 20)
+                            && Input.isCharNumInput(input)) {
+                        this.username = input;
+                        return;
+                    }
+                }
+                case 5 -> {
+                    String input = Input.getInput("""
                             Min 8 Max 30
                             At Least 1 Uppercase Letter
                             At Least 1 Lowercase Letter
@@ -170,20 +203,10 @@ public abstract class Users implements IUsers {
                         return;
                     }
                 }
-                case 5 -> {
-                    String input = Input.getInput("""
-                            Only Letters And Numbers Are Allowed
-                            Min 5 Max 20
-                                                        
-                            """, "Your Username");
-                    if (Input.isLengthInput(input, 5, 20)
-                            && Input.isCharInput(input)
-                            && Input.isNumInput(input)) {
-                        this.username = input;
-                        return;
-                    }
+                case 6 -> {
+                    this.role = this.getClass().getSimpleName();
+                    return;
                 }
-                case 6 -> this.role = this.getClass().getSimpleName();
 
                 default -> System.out.println("Invalid Setup Mode!");
             }
@@ -199,36 +222,42 @@ public abstract class Users implements IUsers {
         System.out.println("Setup For Name Initiated!\n");
 
         setTree(1);
+        System.out.println();
     }
 
     public void setSurname() {
         System.out.println("Setup For Surname Initiated!\n");
 
         setTree(2);
+        System.out.println();
     }
 
     public void setEmail() {
         System.out.println("Setup For Email Initiated!\n");
 
         setTree(3);
-    }
-
-    public void setPassword() {
-        System.out.println("Setup For Password Initiated!\n");
-
-        setTree(4);
+        System.out.println();
     }
 
     public void setUsername() {
         System.out.println("Setup For Username Initiated!\n");
 
+        setTree(4);
+        System.out.println();
+    }
+
+    public void setPassword() {
+        System.out.println("Setup For Password Initiated!\n");
+
         setTree(5);
+        System.out.println();
     }
 
     public void setRole() {
         System.out.println("Setup For Role Initiated!\n");
 
         setTree(6);
+        System.out.println();
     }
 
     //endregion

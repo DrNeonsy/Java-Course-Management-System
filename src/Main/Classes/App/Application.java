@@ -26,7 +26,7 @@ public class Application {
 
     public static void MainMenu() {
         while (true) {
-            System.out.println("Welcome To The Main Menu!");
+            System.out.println("\nWelcome To The Main Menu!");
 
             switch (Input.getInput("""
                     0. Exit
@@ -40,14 +40,14 @@ public class Application {
                 case "1" -> Login();
                 default -> {
                     System.out.println("Invalid Input!");
-                    System.out.printf("%n%s%n", "=".repeat(50));
+                    System.out.printf("%n%s%n%n", "=".repeat(50));
                 }
             }
         }
     }
 
     private static void Login() {
-        System.out.println("Welcome To The Login Menu!");
+        System.out.println("\nWelcome To The Login Menu!");
 
         String username = Input.getInput("", "Username");
         String password = Input.getInput("", "Password");
@@ -58,13 +58,13 @@ public class Application {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
                 System.out.println("Login Successful!");
-                user.MainMenu(user);
+                user.MainMenu();
             }
         }
 
         if (!loggedIn) {
             System.out.println("Login Failed!");
-            System.out.printf("%n%s%n", "=".repeat(50));
+            System.out.printf("%n%s%n%n", "=".repeat(50));
         }
     }
 }

@@ -1,9 +1,9 @@
 package Main.Interfaces;
 
 public interface IUsers {
-    static void showAccountInformation();
+    void showAccountInformation();
 
-    static void enterCourse();
+    void enterCourse();
 
-    static void showCourseMembers();
+    void showCourseMembers();
 }

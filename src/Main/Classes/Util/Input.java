@@ -35,6 +35,19 @@ public class Input {
     }
 
     // ----------------------------------------
+    // Character and Number Only Input
+    // ----------------------------------------
+
+    public static boolean isCharNumInput(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            if (!Character.isLetter(input.charAt(i)) && !Character.isDigit(input.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // ----------------------------------------
     // Email Input
     // ----------------------------------------
     public static boolean isEmailInput(String input) {

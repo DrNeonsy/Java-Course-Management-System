@@ -1,11 +1,11 @@
 package Main.Interfaces;
 
-public interface ITeachers extends IUsers {
-    static void createExercise();
+public interface ITeachers {
+    void createExercise();
 
-    static void deleteExercise();
+    void deleteExercise();
 
-    static void addStudent();
+    void addStudent();
 
-    static void removeStudent();
+    void removeStudent();
 }

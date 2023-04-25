@@ -30,4 +30,25 @@ public class Teacher extends Users implements ITeachers {
     // ----------------------------------------
     // Methods
     // ----------------------------------------
+
+
+    @Override
+    public void createExercise() {
+
+    }
+
+    @Override
+    public void deleteExercise() {
+
+    }
+
+    @Override
+    public void addStudent() {
+
+    }
+
+    @Override
+    public void removeStudent() {
+
+    }
 }

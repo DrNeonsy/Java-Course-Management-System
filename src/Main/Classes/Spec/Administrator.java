@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static Main.Classes.App.Application.users;
 import static Main.Classes.Util.Util.isValidEnum;
 
-public class Administrator extends Users implements IAdmins {
+public class Administrator extends Teacher implements IAdmins {
     // ----------------------------------------
     // Attributes
     // ----------------------------------------
@@ -36,6 +36,32 @@ public class Administrator extends Users implements IAdmins {
     // Methods
     // ----------------------------------------
 
+
+    @Override
+    public void showAllCourses() {
+
+    }
+
+    @Override
+    public void showAllUsers() {
+
+    }
+
+    @Override
+    public void deleteAccount() {
+
+    }
+
+    @Override
+    public void createCourse() {
+
+    }
+
+    @Override
+    public void deleteCourse() {
+
+    }
+
     // ----------------------------------------
     // Create Account
     // ----------------------------------------
@@ -54,8 +80,8 @@ public class Administrator extends Users implements IAdmins {
         users.get(users.size() - 1).setName();
         users.get(users.size() - 1).setSurname();
         users.get(users.size() - 1).setEmail();
-        users.get(users.size() - 1).setPassword();
         users.get(users.size() - 1).setUsername();
+        users.get(users.size() - 1).setPassword();
         users.get(users.size() - 1).setRole();
 
         System.out.println("Account Created!");
@@ -71,13 +97,14 @@ public class Administrator extends Users implements IAdmins {
         while (true) {
             String input = Input.getInput("""
                     Enter The Type Of User You Wish To Create:
-                    1. Student
-                    2. Teacher
-                    3. Administrator
+                    Student
+                    Teacher
+                    Administrator
                                         
                     """, "Type");
 
-            if (isValidEnum(input.toUpperCase(), Type.class)) {
+            input = input.toUpperCase();
+            if (isValidEnum(input, Type.class)) {
 
                 switch (Type.valueOf(input)) {
                     case STUDENT -> {
@@ -91,7 +118,7 @@ public class Administrator extends Users implements IAdmins {
                     }
                 }
             } else {
-                System.out.println("Invalid Input!\n");
+                System.out.println("\nInvalid Input!\n");
             }
         }
     }
