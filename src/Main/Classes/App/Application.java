@@ -1,9 +1,9 @@
 package Main.Classes.App;
 
-import Main.Classes.Gen.Users;
+import Main.Classes.Gen.User;
 import Main.Classes.Spec.Administrator;
 import Main.Classes.Util.Input;
-import Main.Data.Courses;
+import Main.Data.Course;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,8 @@ public class Application {
     // Attributes
     // ----------------------------------------
     private static final Administrator root = new Administrator();
-    public static final ArrayList<Users> users = new ArrayList<>();
-    public static final ArrayList<Courses> courses = new ArrayList<>();
+    public static final ArrayList<User> users = new ArrayList<>();
+    public static final ArrayList<Course> courses = new ArrayList<>();
     private static boolean initialized = false;
 
     // ----------------------------------------
@@ -21,6 +21,7 @@ public class Application {
     // ----------------------------------------
     public static void Init() {
         if (!initialized) {
+            System.out.println("Initializing...\n");
             root.createAccount();
             initialized = true;
         }
@@ -36,7 +37,7 @@ public class Application {
                                     
                     """, "Option")) {
                 case "0" -> {
-                    System.out.println("Exiting...");
+                    System.out.println("\nExiting...");
                     System.exit(0);
                 }
                 case "1" -> Login();
@@ -56,7 +57,7 @@ public class Application {
 
         boolean loggedIn = false;
 
-        for (Users user : users) {
+        for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
                 System.out.println("\nLogin Successful!");

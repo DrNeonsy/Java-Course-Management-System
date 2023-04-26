@@ -4,12 +4,12 @@ import Main.Classes.Spec.Administrator;
 import Main.Classes.Spec.Student;
 import Main.Classes.Spec.Teacher;
 import Main.Classes.Util.Input;
-import Main.Data.Courses;
+import Main.Data.Course;
 import Main.Interfaces.IUsers;
 
 import static Main.Classes.App.Application.courses;
 
-public abstract class Users implements IUsers {
+public abstract class User implements IUsers {
     // ----------------------------------------
     // Attributes
     // ----------------------------------------
@@ -23,7 +23,7 @@ public abstract class Users implements IUsers {
     // ----------------------------------------
     // Constructor
     // ----------------------------------------
-    public Users() {
+    public User() {
     }
 
     // ----------------------------------------
@@ -90,7 +90,7 @@ public abstract class Users implements IUsers {
                     return;
                 }
                 case 1 -> showAccountInformation();
-                case 2 -> enterCourse();
+                case 2 -> showCourseAssignments();
                 case 3 -> showCourseMembers();
             }
 
@@ -105,12 +105,12 @@ public abstract class Users implements IUsers {
 
             if (this instanceof Administrator a) {
                 switch (option) {
-                    case 8 -> a.showAllCourses();
-                    case 9 -> a.showAllUsers();
-                    case 10 -> a.createAccount();
-                    case 11 -> a.deleteAccount();
-                    case 12 -> a.createCourse();
-                    case 13 -> a.deleteCourse();
+                    case 4 -> a.showAllCourses();
+                    case 5 -> a.showAllUsers();
+                    case 6 -> a.createAccount();
+                    case 7 -> a.deleteAccount();
+                    case 8 -> a.createCourse();
+                    case 9 -> a.deleteCourse();
                 }
             }
             Input.getInput("", "Press Enter To Continue");
@@ -128,25 +128,25 @@ public abstract class Users implements IUsers {
     }
 
     @Override
-    public void enterCourse() {
+    public void showCourseAssignments() {
         // This Will Show All The Exercises Of Every Course The User Is Enrolled In
         if (this instanceof Administrator) {
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 System.out.println(course);
-                System.out.println(course.assignments());
+                System.out.printf("Assignments: %s%n", course.assignments());
             }
         } else if (this instanceof Student) {
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 if (course.students().contains(this)) {
                     System.out.println(course);
-                    System.out.println(course.assignments());
+                    System.out.printf("Assignments: %s%n", course.assignments());
                 }
             }
         } else if (this instanceof Teacher) {
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 if (course.teacher().contains(this.getName() + " " + this.getSurname())) {
                     System.out.println(course);
-                    System.out.println(course.assignments());
+                    System.out.printf("Assignments: %s%n", course.assignments());
                 }
             }
         }
@@ -155,26 +155,26 @@ public abstract class Users implements IUsers {
     @Override
     public void showCourseMembers() {
         if (this instanceof Administrator) { // Show Members Of Every Course
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 System.out.println(course);
-                System.out.println(course.students());
+                System.out.printf("Students: %s", course.students());
             }
 
         } else if (this instanceof Student) {
 
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 if (course.students().contains(this)) {
                     System.out.println(course);
-                    System.out.println(course.students());
+                    System.out.printf("Students: %s", course.students());
                 }
             }
 
         } else if (this instanceof Teacher) {
 
-            for (Courses course : courses) {
+            for (Course course : courses) {
                 if (course.teacher().contains(this.getName() + " " + this.getSurname())) {
                     System.out.println(course);
-                    System.out.println(course.students());
+                    System.out.printf("Students: %s", course.students());
                 }
             }
         }
@@ -185,7 +185,7 @@ public abstract class Users implements IUsers {
     // Getters and Setters
     // ----------------------------------------
 
-    private void setTree(int mode) {
+    private void accountSetters(int mode) {
 
         while (true) { // Loop Until Valid Input Which Is Then Returned
             switch (mode) {
@@ -216,10 +216,10 @@ public abstract class Users implements IUsers {
                 case 3 -> {
                     String input = Input.getInput("""
                             Only Letters, Numbers, Dots, Underscores, Hyphens And @ Are Allowed
-                            Min 5 Max 30
+                            Min 4 Max 30
                                                         
                             """, "Your Email");
-                    if (Input.isLengthInput(input, 5, 30)
+                    if (Input.isLengthInput(input, 4, 30)
                             && Input.isEmailInput(input)) {
                         this.email = input;
                         return;
@@ -270,42 +270,42 @@ public abstract class Users implements IUsers {
     public void setName() {
         System.out.println("Setup For Name Initiated!\n");
 
-        setTree(1);
+        accountSetters(1);
         System.out.println();
     }
 
     public void setSurname() {
         System.out.println("Setup For Surname Initiated!\n");
 
-        setTree(2);
+        accountSetters(2);
         System.out.println();
     }
 
     public void setEmail() {
         System.out.println("Setup For Email Initiated!\n");
 
-        setTree(3);
+        accountSetters(3);
         System.out.println();
     }
 
     public void setUsername() {
         System.out.println("Setup For Username Initiated!\n");
 
-        setTree(4);
+        accountSetters(4);
         System.out.println();
     }
 
     public void setPassword() {
         System.out.println("Setup For Password Initiated!\n");
 
-        setTree(5);
+        accountSetters(5);
         System.out.println();
     }
 
     public void setRole() {
         System.out.println("Setup For Role Initiated!\n");
 
-        setTree(6);
+        accountSetters(6);
         System.out.println();
     }
 
@@ -348,15 +348,15 @@ public abstract class Users implements IUsers {
                         Name: %s
                         Surname: %s
                         Email: %s
-                        Password: %s
                         Username: %s
+                        Password: %s
                         Role: %s
                         """,
                 this.getName(),
                 this.getSurname(),
                 this.getEmail(),
-                this.getPassword(),
                 this.getUsername(),
+                this.getPassword(),
                 this.getRole());
     }
 }

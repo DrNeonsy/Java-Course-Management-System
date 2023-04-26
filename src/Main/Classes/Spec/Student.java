@@ -1,15 +1,15 @@
 package Main.Classes.Spec;
 
-import Main.Classes.Gen.Users;
+import Main.Classes.Gen.User;
 
 import java.util.ArrayList;
 
-public class Student extends Users {
+public class Student extends User {
     public static final ArrayList<String> options = new ArrayList<>() {
         {
             add("0. Exit");
             add("1. Show Account Information");
-            add("2. Enter Course");
+            add("2. Show Course Assignments");
             add("3. Show Course Members");
         }
     };
