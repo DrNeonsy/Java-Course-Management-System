@@ -19,6 +19,7 @@ public abstract class User implements IUsers {
     protected String password;
     protected String username;
     protected String role;
+    private static boolean isAdmin;
 
     // ----------------------------------------
     // Constructor
@@ -124,6 +125,7 @@ public abstract class User implements IUsers {
 
     @Override
     public void showAccountInformation() {
+        isAdmin = true;
         System.out.println(this);
     }
 
@@ -155,6 +157,7 @@ public abstract class User implements IUsers {
     @Override
     public void showCourseMembers() {
         if (this instanceof Administrator) { // Show Members Of Every Course
+            isAdmin = true;
             for (Course course : courses) {
                 System.out.println(course);
                 System.out.printf("Students: %s", course.students());
@@ -162,6 +165,7 @@ public abstract class User implements IUsers {
 
         } else if (this instanceof Student) {
 
+            isAdmin = false;
             for (Course course : courses) {
                 if (course.students().contains(this)) {
                     System.out.println(course);
@@ -171,6 +175,7 @@ public abstract class User implements IUsers {
 
         } else if (this instanceof Teacher) {
 
+            isAdmin = false;
             for (Course course : courses) {
                 if (course.teacher().contains(this.getName() + " " + this.getSurname())) {
                     System.out.println(course);
@@ -228,10 +233,10 @@ public abstract class User implements IUsers {
                 case 4 -> {
                     String input = Input.getInput("""
                             Only Letters And Numbers Are Allowed
-                            Min 5 Max 20
+                            Min 3 Max 20
                                                         
                             """, "Your Username");
-                    if (Input.isLengthInput(input, 5, 20)
+                    if (Input.isLengthInput(input, 3, 20)
                             && Input.isCharNumInput(input)) {
                         this.username = input;
                         return;
@@ -309,6 +314,12 @@ public abstract class User implements IUsers {
         System.out.println();
     }
 
+    public void setAdmin(boolean admin) {
+        if (this instanceof Administrator) {
+            isAdmin = admin;
+        }
+    }
+
     //endregion
 
     // region Getters
@@ -344,19 +355,34 @@ public abstract class User implements IUsers {
     // ----------------------------------------
     @Override
     public String toString() {
-        return String.format("""
-                        Name: %s
-                        Surname: %s
-                        Email: %s
-                        Username: %s
-                        Password: %s
-                        Role: %s
-                        """,
-                this.getName(),
-                this.getSurname(),
-                this.getEmail(),
-                this.getUsername(),
-                this.getPassword(),
-                this.getRole());
+        if (isAdmin) {
+            return String.format("""
+                                                    
+                            Name: %s
+                            Surname: %s
+                            Email: %s
+                            Username: %s
+                            Password: %s
+                            Role: %s
+                            """,
+                    this.getName(),
+                    this.getSurname(),
+                    this.getEmail(),
+                    this.getUsername(),
+                    this.getPassword(),
+                    this.getRole());
+        } else {
+            return String.format("""
+                                                    
+                            Name: %s
+                            Surname: %s
+                            Email: %s
+                            Role: %s
+                            """,
+                    this.getName(),
+                    this.getSurname(),
+                    this.getEmail(),
+                    this.getRole());
+        }
     }
 }

@@ -11,7 +11,7 @@ public class Input {
     }
 
     // ----------------------------------------
-    // Check whether a string is at least one alphabet char and whitespaces are allowed but it cannot only contain whitespaces
+    // Check Whether A String Has At Least One Alphabet Character And Allows Whitespaces, But Cannot Consist Solely Of Whitespaces
     // ----------------------------------------
 
     public static boolean isCharInputWithWhitespaces(String input) {
@@ -59,7 +59,7 @@ public class Input {
     // Email Input
     // ----------------------------------------
     public static boolean isEmailInput(String input) {
-        return input.matches("^[A-Za-z][A-Za-z0-9_-]*@[A-Za-z]+\\.[A-Za-z]+$");
+        return input.matches("^[A-Za-z][A-Za-z0-9_.-]*@[A-Za-z]+(.[A-Za-z]+)+$");
     }
 
     // ----------------------------------------

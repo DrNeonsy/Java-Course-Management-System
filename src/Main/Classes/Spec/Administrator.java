@@ -41,8 +41,11 @@ public class Administrator extends User implements IAdmins {
     @Override
     public void showAllCourses() {
         if (!courses.isEmpty()) {
+            this.setAdmin(true);
             for (Course course : courses) {
                 System.out.println(course);
+                System.out.println(course.students());
+                System.out.println(course.assignments() + System.lineSeparator());
             }
         } else {
             System.out.println("No Courses Found!");
@@ -51,6 +54,7 @@ public class Administrator extends User implements IAdmins {
 
     @Override
     public void showAllUsers() {
+        this.setAdmin(true);
         for (User user : users) {
             System.out.println(user);
         }
@@ -156,7 +160,7 @@ public class Administrator extends User implements IAdmins {
         boolean teacherAvailable = false;
 
         for (User user : users) {
-            if (user.getRole().equals("Teacher")) {
+            if (user instanceof Teacher) {
                 teacherAvailable = true;
                 break;
             }
@@ -203,12 +207,12 @@ public class Administrator extends User implements IAdmins {
                 }
                 case 3 -> {
                     ArrayList<Integer> teacherIndices = new ArrayList<>();
+                    System.out.println("\nTeachers\n");
 
                     for (int i = 0, t = 1; i < users.size(); i++) {
-                        if (users.get(i).getRole().equals("Teacher")) {
+                        if (users.get(i) instanceof Teacher) {
                             teacherIndices.add(i);
-                            System.out.printf("%d. %s %s%n", t, users.get(i).getName(), users.get(i).getSurname());
-                            t++;
+                            System.out.printf("%d. %s %s%n", t++, users.get(i).getName(), users.get(i).getSurname());
                         }
                     }
 

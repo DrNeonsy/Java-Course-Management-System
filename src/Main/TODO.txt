@@ -1,0 +1,12 @@
+Allow Users To Change Their Data
+
+Allow Admins To Change Data Of Any User
+
+Check For Duplicate Entries {
+
+    Username (On Setting / Changing)
+    Email (On Setting / Changing)
+    Exercise (On Adding Exercise)
+    Student (On Adding Student)
+
+    }

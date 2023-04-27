@@ -37,12 +37,12 @@ public class Teacher extends User implements ITeachers {
     @Override
     public void createExercise() {
         if (courses.size() > 0) {
-            ArrayList<Integer> indexes = new ArrayList<>();
+            ArrayList<Integer> iTeachCourseIndex = new ArrayList<>();
 
             for (int i = 0; i < courses.size(); i++) {
                 if (courses.get(i).teacher().equals(this.getName() + " " + this.getSurname())) {
                     System.out.println(courses.get(i));
-                    indexes.add(i);
+                    iTeachCourseIndex.add(i);
                 }
             }
 
@@ -59,7 +59,7 @@ public class Teacher extends User implements ITeachers {
                     option = Integer.parseInt(input);
                     boolean valid = false;
 
-                    for (int index : indexes) {
+                    for (int index : iTeachCourseIndex) {
                         if (Integer.parseInt(courses.get(index).id()) == option) {
                             option = index;
                             valid = true;
@@ -90,12 +90,12 @@ public class Teacher extends User implements ITeachers {
     @Override
     public void deleteExercise() {
         if (courses.size() > 0) {
-            ArrayList<Integer> indexes = new ArrayList<>();
+            ArrayList<Integer> iTeachCourseIndex = new ArrayList<>();
 
             for (int i = 0; i < courses.size(); i++) {
                 if (courses.get(i).teacher().equals(this.getName() + " " + this.getSurname())) {
                     System.out.println(courses.get(i));
-                    indexes.add(i);
+                    iTeachCourseIndex.add(i);
                 }
             }
 
@@ -112,7 +112,7 @@ public class Teacher extends User implements ITeachers {
                     option = Integer.parseInt(input);
                     boolean valid = false;
 
-                    for (int index : indexes) {
+                    for (int index : iTeachCourseIndex) {
                         if (Integer.parseInt(courses.get(index).id()) == option) {
                             option = index;
                             valid = true;
@@ -160,12 +160,12 @@ public class Teacher extends User implements ITeachers {
     @Override
     public void addStudent() {
         if (courses.size() > 0) {
-            ArrayList<Integer> indexes = new ArrayList<>();
+            ArrayList<Integer> iTeachCourseIndex = new ArrayList<>();
 
             for (int i = 0; i < courses.size(); i++) {
                 if (courses.get(i).teacher().equals(this.getName() + " " + this.getSurname())) {
                     System.out.println(courses.get(i));
-                    indexes.add(i);
+                    iTeachCourseIndex.add(i);
                 }
             }
 
@@ -182,7 +182,7 @@ public class Teacher extends User implements ITeachers {
                     courseInput = Integer.parseInt(input);
                     boolean valid = false;
 
-                    for (int index : indexes) {
+                    for (int index : iTeachCourseIndex) {
                         if (Integer.parseInt(courses.get(index).id()) == courseInput) {
                             courseInput = index;
                             valid = true;
@@ -199,12 +199,32 @@ public class Teacher extends User implements ITeachers {
 
             ArrayList<Integer> studentIndexes = new ArrayList<>();
 
-            for (int i = 0; i < users.size(); i++) {
+            for (int i = 0, s = 1; i < users.size(); i++) {
                 if (users.get(i) instanceof Student) {
-                    System.out.printf("%s", courses.get(i));
-                    indexes.add(i);
+                    studentIndexes.add(i);
+                    System.out.printf("%n%nUser %d%s", s++, users.get(i));
                 }
             }
+
+            int studentInput;
+
+            while (true) {
+                String input = Input.getInput("Select A Student To Add\n", "Option");
+
+                if (input.length() == 0) {
+                    continue;
+                }
+
+                if (Input.isNumInput(input)) {
+                    studentInput = Integer.parseInt(input);
+                    if (studentInput >= 1 && studentInput <= studentIndexes.size()) {
+                        break;
+                    }
+                }
+                System.out.println("Invalid Input!");
+            }
+            courses.get(courseInput).students().add((Student) users.get(studentIndexes.get(studentInput - 1)));
+
 
         } else {
             System.out.println("\nNo Courses Found!");
@@ -215,6 +235,72 @@ public class Teacher extends User implements ITeachers {
 
     @Override
     public void removeStudent() {
+        if (courses.size() > 0) {
+            ArrayList<Integer> iTeachCourseIndex = new ArrayList<>();
 
+            for (int i = 0; i < courses.size(); i++) {
+                if (courses.get(i).teacher().equals(this.getName() + " " + this.getSurname())) {
+                    System.out.println(courses.get(i));
+                    iTeachCourseIndex.add(i);
+                }
+            }
+
+            int courseInput;
+
+            while (true) {
+                String input = Input.getInput("", "Course ID");
+
+                if (input.length() == 0) {
+                    return;
+                }
+
+                if (Input.isNumInput(input)) {
+                    courseInput = Integer.parseInt(input);
+                    boolean valid = false;
+
+                    for (int index : iTeachCourseIndex) {
+                        if (Integer.parseInt(courses.get(index).id()) == courseInput) {
+                            courseInput = index;
+                            valid = true;
+                            break;
+                        }
+                    }
+
+                    if (valid) {
+                        break;
+                    }
+                }
+                System.out.println("Invalid Input!");
+            }
+
+            if (courses.get(courseInput).students().size() > 0) {
+                for (int i = 0; i < courses.get(courseInput).students().size(); i++) {
+                    System.out.printf("%n%nUser %d%s%n", i + 1, courses.get(courseInput).students().get(i));
+                }
+
+                int studentInput;
+
+                while (true) {
+                    String input = Input.getInput("Select A Student To Remove\n", "Option");
+
+                    if (input.length() == 0) {
+                        continue;
+                    }
+
+                    if (Input.isNumInput(input)) {
+                        studentInput = Integer.parseInt(input);
+                        if (studentInput >= 1 && studentInput <= courses.get(courseInput).students().size()) {
+                            courses.get(courseInput).students().remove(studentInput - 1);
+                            return;
+                        }
+                    }
+                    System.out.println("Invalid Input!");
+                }
+            } else {
+                System.out.println("\nNo Students Found!");
+            }
+        } else {
+            System.out.println("\nNo Courses Found!");
+        }
     }
 }
