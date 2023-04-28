@@ -195,7 +195,6 @@ public abstract class User implements IUsers {
         }
     }
 
-
     // ----------------------------------------
     // Getters and Setters
     // ----------------------------------------
@@ -230,14 +229,27 @@ public abstract class User implements IUsers {
                 }
                 case 3 -> {
                     String input = Input.getInput("""
-                            Only Letters, Numbers, Dots, Underscores, Hyphens And @ Are Allowed
-                            Min 4 Max 30
+                            Only Letters, Numbers, Dots, Underscores And Hyphens Are Allowed And Starts With An Alphabetical Character
+                            Must Contain An @ Symbol And After That Must Be One Alphabetical Character
+                            After That Must Be A Dot And After That Must Be 2 Or 3 Alphabetical Characters
                                                         
+                            Min 5 Max 30
                             """, "Your Email");
-                    if (Input.isLengthInput(input, 4, 30)
+                    if (Input.isLengthInput(input, 5, 30)
                             && Input.isEmailInput(input)) {
-                        this.email = input;
-                        return;
+                        if (users.size() > 0) {
+                            boolean isUnique = true;
+                            for (User user : users) {
+                                if (!this.equals(user) && user.getEmail().equals(input)) {
+                                    isUnique = false;
+                                    System.out.println("Email Already Exists!");
+                                }
+                            }
+                            if (isUnique) {
+                                this.email = input;
+                                return;
+                            }
+                        }
                     }
                 }
                 case 4 -> {
@@ -248,8 +260,20 @@ public abstract class User implements IUsers {
                             """, "Your Username");
                     if (Input.isLengthInput(input, 3, 20)
                             && Input.isCharNumInput(input)) {
-                        this.username = input;
-                        return;
+
+                        if (users.size() > 0) {
+                            boolean isUnique = true;
+                            for (User user : users) {
+                                if (!this.equals(user) && user.getUsername().equals(input)) {
+                                    isUnique = false;
+                                    System.out.println("Username Already Exists!");
+                                }
+                            }
+                            if (isUnique) {
+                                this.username = input;
+                                return;
+                            }
+                        }
                     }
                 }
                 case 5 -> {
@@ -271,7 +295,6 @@ public abstract class User implements IUsers {
                     this.role = this.getClass().getSimpleName();
                     return;
                 }
-
                 default -> System.out.println("Invalid Setup Mode!");
             }
 

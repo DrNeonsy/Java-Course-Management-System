@@ -18,7 +18,7 @@ public class Administrator extends User implements IAdmins {
     public static final ArrayList<String> options = new ArrayList<>(Student.options) {
         {
             add("4. Show All Courses");
-            add("5. Show All User");
+            add("5. Show All Users");
             add("6. Create Account");
             add("7. Delete Account");
             add("8. Create Course");
@@ -89,6 +89,7 @@ public class Administrator extends User implements IAdmins {
             System.out.printf("%n%s %s (%s)%n%n", users.get(option).getName(), users.get(option).getSurname(), users.get(option).getRole());
 
             users.remove(option);
+            users.trimToSize();
             System.out.println("Account Deleted!");
         } else {
             System.out.println("\nNo Accounts Found!");
@@ -266,6 +267,7 @@ public class Administrator extends User implements IAdmins {
                 System.out.println("Invalid Input!");
             }
             courses.remove(option - 1);
+            courses.trimToSize();
         } else {
             System.out.println("\nNo Courses Found!");
         }

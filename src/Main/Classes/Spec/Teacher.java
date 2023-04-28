@@ -75,11 +75,22 @@ public class Teacher extends User implements ITeachers {
             }
 
             while (true) {
+                boolean isUnique = true;
                 String input = Input.getInput("", "Assignment Task");
 
                 if (Input.isCharInputWithWhitespaces(input)) {
-                    courses.get(option).assignments().add(input);
-                    return;
+
+                    for (int i = 0; i < courses.get(option).assignments().size(); i++) {
+                        if (courses.get(option).assignments().get(i).equalsIgnoreCase(input)) {
+                            isUnique = false;
+                            System.out.println("Exercise Already Exists!");
+                            break;
+                        }
+                    }
+                    if (isUnique) {
+                        courses.get(option).assignments().add(input);
+                        return;
+                    }
                 }
             }
         } else {
@@ -143,6 +154,7 @@ public class Teacher extends User implements ITeachers {
                         option = Integer.parseInt(input) - 1;
                         if (option >= 0 && option < courses.get(option).assignments().size()) {
                             courses.get(option).assignments().remove(option);
+                            courses.get(option).assignments().trimToSize();
                             return;
                         }
 
@@ -218,14 +230,24 @@ public class Teacher extends User implements ITeachers {
                 if (Input.isNumInput(input)) {
                     studentInput = Integer.parseInt(input);
                     if (studentInput >= 1 && studentInput <= studentIndexes.size()) {
-                        break;
+
+                        boolean isUnique = true;
+
+                        for (int i = 0; i < courses.get(courseInput).students().size(); i++) {
+                            if (courses.get(courseInput).students().get(i).equals(users.get(studentIndexes.get(studentInput - 1)))) {
+                                isUnique = false;
+                                System.out.println("Student Already Enrolled!");
+                                break;
+                            }
+                        }
+                        if (isUnique) {
+                            courses.get(courseInput).students().add((Student) users.get(studentIndexes.get(studentInput - 1)));
+                            return;
+                        }
                     }
                 }
                 System.out.println("Invalid Input!");
             }
-            courses.get(courseInput).students().add((Student) users.get(studentIndexes.get(studentInput - 1)));
-
-
         } else {
             System.out.println("\nNo Courses Found!");
         }
@@ -291,6 +313,7 @@ public class Teacher extends User implements ITeachers {
                         studentInput = Integer.parseInt(input);
                         if (studentInput >= 1 && studentInput <= courses.get(courseInput).students().size()) {
                             courses.get(courseInput).students().remove(studentInput - 1);
+                            courses.get(courseInput).students().trimToSize();
                             return;
                         }
                     }

@@ -59,7 +59,7 @@ public class Input {
     // Email Input
     // ----------------------------------------
     public static boolean isEmailInput(String input) {
-        return input.matches("^[A-Za-z][A-Za-z0-9_.-]*@[A-Za-z]+(.[A-Za-z]+)+$");
+        return input.matches("^[A-Za-z][A-Za-z0-9_.-]*@[A-Za-z]+\\.[A-Za-z]{2,3}$");
     }
 
     // ----------------------------------------
