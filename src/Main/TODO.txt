@@ -1,4 +1,0 @@
-Check For Duplicate Entries {
-    Exercise (On Adding Exercise To A Course)
-    Student (On Adding Student To A Course)
-    }

@@ -8,6 +8,8 @@ import Main.Classes.Util.Util;
 import Main.Data.Course;
 import Main.Interfaces.IUsers;
 
+import java.util.function.Function;
+
 import static Main.Classes.App.Application.courses;
 import static Main.Classes.App.Application.users;
 
@@ -195,111 +197,98 @@ public abstract class User implements IUsers {
         }
     }
 
+    private String getValidInput(String message, String what, Function<String, Boolean> validationFunction) {
+        while (true) {
+            String input = Input.getInput(message, what);
+            if (validationFunction.apply(input)) {
+                return input;
+            }
+            System.out.println("Incorrect Input! Please Try Again!");
+            System.out.printf("%n%s%n", "=".repeat(50));
+        }
+    }
+
+
     // ----------------------------------------
     // Getters and Setters
     // ----------------------------------------
 
     private void accountSetters(int mode) {
-
-        while (true) { // Loop Until Valid Input Which Is Then Returned
-            switch (mode) {
-                case 1 -> {
-                    String input = Input.getInput("""
-                            Only Letters Are Allowed
-                            Min 2 Max 20
-                                                        
-                            """, "Your Name");
-                    if (Input.isLengthInput(input, 2, 20)
-                            && Input.isCharInput(input)) {
-                        this.name = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
-                        return;
-                    }
-                }
-                case 2 -> {
-                    String input = Input.getInput("""
-                            Only Letters Are Allowed
-                            Min 2 Max 20
-                                                        
-                            """, "Your Surname");
-                    if (Input.isLengthInput(input, 2, 20)
-                            && Input.isCharInput(input)) {
-                        this.surname = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
-                        return;
-                    }
-                }
-                case 3 -> {
-                    String input = Input.getInput("""
-                            Only Letters, Numbers, Dots, Underscores And Hyphens Are Allowed And Starts With An Alphabetical Character
-                            Must Contain An @ Symbol And After That Must Be One Alphabetical Character
-                            After That Must Be A Dot And After That Must Be 2 Or 3 Alphabetical Characters
-                                                        
-                            Min 5 Max 30
-                            """, "Your Email");
-                    if (Input.isLengthInput(input, 5, 30)
-                            && Input.isEmailInput(input)) {
-                        if (users.size() > 0) {
-                            boolean isUnique = true;
-                            for (User user : users) {
-                                if (!this.equals(user) && user.getEmail().equals(input)) {
-                                    isUnique = false;
-                                    System.out.println("Email Already Exists!");
-                                }
-                            }
-                            if (isUnique) {
-                                this.email = input;
-                                return;
-                            }
-                        }
-                    }
-                }
-                case 4 -> {
-                    String input = Input.getInput("""
-                            Only Letters And Numbers Are Allowed
-                            Min 3 Max 20
-                                                        
-                            """, "Your Username");
-                    if (Input.isLengthInput(input, 3, 20)
-                            && Input.isCharNumInput(input)) {
-
-                        if (users.size() > 0) {
-                            boolean isUnique = true;
-                            for (User user : users) {
-                                if (!this.equals(user) && user.getUsername().equals(input)) {
-                                    isUnique = false;
-                                    System.out.println("Username Already Exists!");
-                                }
-                            }
-                            if (isUnique) {
-                                this.username = input;
-                                return;
-                            }
-                        }
-                    }
-                }
-                case 5 -> {
-                    String input = Input.getInput("""
-                            Min 8 Max 30
-                            At Least 1 Uppercase Letter
-                            At Least 1 Lowercase Letter
-                            At Least 1 Number
-                            At Least 1 Special Character
-                                                        
-                            """, "Your Password");
-                    if (Input.isLengthInput(input, 8, 30)
-                            && Input.isPasswordInput(input)) {
-                        this.password = input;
-                        return;
-                    }
-                }
-                case 6 -> {
-                    this.role = this.getClass().getSimpleName();
-                    return;
-                }
-                default -> System.out.println("Invalid Setup Mode!");
+        switch (mode) {
+            case 1 -> {
+                String message = """
+                        Only Letters Are Allowed
+                        Min 2 Max 20
+                        """;
+                String input = getValidInput(message, "Your Name",
+                        inp -> Input.isLengthInput(inp, 2, 20)
+                                && Input.isCharInput(inp));
+                this.name = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
             }
+            case 2 -> {
+                String message = """
+                        Only Letters Are Allowed
+                        Min 2 Max 20
+                        """;
+                String input = getValidInput(message, "Your Surname",
+                        inp -> Input.isLengthInput(inp, 2, 20)
+                                && Input.isCharInput(inp));
+                this.surname = Character.toUpperCase(input.charAt(0)) + input.substring(1).toLowerCase();
+            }
+            case 3 -> {
+                String message = """
+                        Only Letters, Numbers, Dots, Underscores And Hyphens Are Allowed And Starts With An Alphabetical Character
+                        Must Contain An @ Symbol And After That Must Be One Alphabetical Character
+                        After That Must Be A Dot And After That Must Be 2 Or 3 Alphabetical Characters
+                        Min 5 Max 30
+                        """;
+                String input = getValidInput(message, "Your Email", inp -> Input.isLengthInput(inp, 5, 30) && Input.isEmailInput(inp));
 
-            System.out.println("Incorrect Input! Please Try Again!");
-            System.out.printf("%n%s%n", "=".repeat(50));
+                if (users.size() > 0) {
+                    boolean isUnique = true;
+                    for (User user : users) {
+                        if (!this.equals(user) && user.getEmail().equals(input)) {
+                            isUnique = false;
+                            System.out.println("Email Already Exists!");
+                        }
+                    }
+                    if (isUnique) {
+                        this.email = input;
+                    }
+                }
+            }
+            case 4 -> {
+                String message = """
+                        Only Letters And Numbers Are Allowed
+                        Min 3 Max 20
+                        """;
+                String input = getValidInput(message, "Your Username", inp -> Input.isLengthInput(inp, 3, 20) && Input.isCharNumInput(inp));
+
+                if (users.size() > 0) {
+                    boolean isUnique = true;
+                    for (User user : users) {
+                        if (!this.equals(user) && user.getUsername().equals(input)) {
+                            isUnique = false;
+                            System.out.println("Username Already Exists!");
+                        }
+                    }
+                    if (isUnique) {
+                        this.username = input;
+                    }
+                }
+            }
+            case 5 -> {
+                String message = """
+                        Min 8 Max 30
+                        At Least 1 Uppercase Letter
+                        At Least 1 Lowercase Letter
+                        At Least 1 Number
+                        At Least 1 Special Character
+                        """;
+                this.password = getValidInput(message, "Your Password", inp -> Input.isLengthInput(inp, 8, 30) && Input.isPasswordInput(inp));
+            }
+            case 6 -> this.role = this.getClass().getSimpleName();
+            default -> System.out.println("Invalid Setup Mode!");
         }
     }
 

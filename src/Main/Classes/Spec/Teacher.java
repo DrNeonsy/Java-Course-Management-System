@@ -196,7 +196,7 @@ public class Teacher extends User implements ITeachers {
 
             result[0] = courseInput;
 
-            if (shouldListStudents) {
+            if (shouldListStudents && courses.get(courseInput).students().size() > 0) {
                 ArrayList<Integer> studentIndexes = new ArrayList<>();
 
                 for (int i = 0, s = 1; i < users.size(); i++) {
@@ -224,6 +224,8 @@ public class Teacher extends User implements ITeachers {
                     }
                     System.out.println("Invalid Input!");
                 }
+            } else {
+                System.out.println("\nNo Students Found!");
             }
         }
         return result;
@@ -236,18 +238,20 @@ public class Teacher extends User implements ITeachers {
         int studentIndex = selectedCourseAndStudent[1];
 
         if (courseIndex != -1) {
-            boolean isUnique = true;
+            if (studentIndex != -1) {
+                boolean isUnique = true;
 
-            for (int i = 0; i < courses.get(courseIndex).students().size(); i++) {
-                if (courses.get(courseIndex).students().get(i).equals(users.get(studentIndex))) {
-                    isUnique = false;
-                    System.out.println("Student Already Enrolled!");
-                    break;
+                for (int i = 0; i < courses.get(courseIndex).students().size(); i++) {
+                    if (courses.get(courseIndex).students().get(i).equals(users.get(studentIndex))) {
+                        isUnique = false;
+                        System.out.println("Student Already Enrolled!");
+                        break;
+                    }
                 }
-            }
 
-            if (isUnique) {
-                courses.get(courseIndex).students().add((Student) users.get(studentIndex));
+                if (isUnique) {
+                    courses.get(courseIndex).students().add((Student) users.get(studentIndex));
+                }
             }
         } else {
             System.out.println("\nNo Courses Found!");
@@ -284,10 +288,8 @@ public class Teacher extends User implements ITeachers {
                     }
                     System.out.println("Invalid Input!");
                 }
-            } else {
-                System.out.println("\nNo Students Found!");
             }
-        } else {
+        } else if (courses.size() == 0) {
             System.out.println("\nNo Courses Found!");
         }
     }
