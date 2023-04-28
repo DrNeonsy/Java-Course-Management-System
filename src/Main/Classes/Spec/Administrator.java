@@ -6,6 +6,7 @@ import Main.Data.Course;
 import Main.Interfaces.IAdmins;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import static Main.Classes.App.Application.courses;
 import static Main.Classes.App.Application.users;
@@ -168,9 +169,10 @@ public class Administrator extends User implements IAdmins {
         }
 
         if (teacherAvailable) {
-            String name = courseSetters(1);
-            String subject = courseSetters(2);
-            String teacher = courseSetters(3);
+            String name = courseSetters("Course Name", 3, 30, Input::isCharInputWithWhitespaces);
+            String subject = courseSetters("Subject Name", 2, 20, Input::isCharInput);
+            String teacher = selectTeacher();
+
             String id = String.valueOf(courses.size() + 1);
 
             courses.add(new Course(id, name, subject, teacher, new ArrayList<>(), new ArrayList<>()));
@@ -180,67 +182,45 @@ public class Administrator extends User implements IAdmins {
         }
     }
 
-    private String courseSetters(int mode) {
-
-        while (true) { // Loop Until Valid Input Which Is Then Returned
-            switch (mode) {
-                case 1 -> {
-                    String input = Input.getInput("""
-                            Only Letters Are Allowed
-                            Min 3 Max 30
-                                                        
-                            """, "Course Name");
-                    if (Input.isLengthInput(input, 3, 30)
-                            && Input.isCharInputWithWhitespaces(input)) {
-                        return input.substring(0, 1).toUpperCase() + input.substring(1);
-                    }
-                }
-                case 2 -> {
-                    String input = Input.getInput("""
-                            Only Letters Are Allowed
-                            Min 2 Max 20
-                                                        
-                            """, "Subject Name");
-                    if (Input.isLengthInput(input, 2, 20)
-                            && Input.isCharInput(input)) {
-                        return input.toUpperCase();
-                    }
-                }
-                case 3 -> {
-                    ArrayList<Integer> teacherIndices = new ArrayList<>();
-                    System.out.println("\nTeachers\n");
-
-                    for (int i = 0, t = 1; i < users.size(); i++) {
-                        if (users.get(i) instanceof Teacher) {
-                            teacherIndices.add(i);
-                            System.out.printf("%d. %s %s%n", t++, users.get(i).getName(), users.get(i).getSurname());
-                        }
-                    }
-
-                    int option;
-                    while (true) {
-                        String input = Input.getInput("Select A Teacher For This Course\n", "Option");
-
-                        if (input.length() == 0) {
-                            continue;
-                        }
-
-                        if (Input.isNumInput(input)) {
-                            option = Integer.parseInt(input);
-                            if (option >= 1 && option <= teacherIndices.size()) {
-                                break;
-                            }
-                        }
-                        System.out.println("Invalid Input!");
-                    }
-                    return users.get(teacherIndices.get(option - 1)).getName() + " " + users.get(teacherIndices.get(option - 1)).getSurname();
-                }
-                default -> System.out.println("Invalid Setup Mode!");
+    private String courseSetters(String prompt, int minLength, int maxLength, Function<String, Boolean> validationFunction) {
+        while (true) {
+            String input = Input.getInput("Only Letters Are Allowed\nMin " + minLength + " Max " + maxLength + System.lineSeparator(), prompt);
+            if (Input.isLengthInput(input, minLength, maxLength) && validationFunction.apply(input)) {
+                return input.substring(0, 1).toUpperCase() + input.substring(1);
             }
-
             System.out.println("Incorrect Input! Please Try Again!");
             System.out.printf("%n%s%n", "=".repeat(50));
         }
+    }
+
+    private String selectTeacher() {
+        ArrayList<Integer> teacherIndices = new ArrayList<>();
+        System.out.println("\nTeachers\n");
+
+        for (int i = 0, t = 1; i < users.size(); i++) {
+            if (users.get(i) instanceof Teacher) {
+                teacherIndices.add(i);
+                System.out.printf("%d. %s %s%n", t++, users.get(i).getName(), users.get(i).getSurname());
+            }
+        }
+
+        int option;
+        while (true) {
+            String input = Input.getInput("Select A Teacher For This Course\n", "Option");
+
+            if (input.length() == 0) {
+                continue;
+            }
+
+            if (Input.isNumInput(input)) {
+                option = Integer.parseInt(input);
+                if (option >= 1 && option <= teacherIndices.size()) {
+                    break;
+                }
+            }
+            System.out.println("Invalid Input!");
+        }
+        return users.get(teacherIndices.get(option - 1)).getName() + " " + users.get(teacherIndices.get(option - 1)).getSurname();
     }
 
     @Override
@@ -272,4 +252,5 @@ public class Administrator extends User implements IAdmins {
             System.out.println("\nNo Courses Found!");
         }
     }
+
 }
