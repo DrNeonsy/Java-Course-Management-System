@@ -12,4 +12,17 @@ public class Util {
         }
         return false;
     }
+
+    public static boolean decision(String msg) {
+
+        char cKey, option1 = 'y', option2 = 'n';
+
+        System.out.printf(msg);
+
+        do {
+            cKey = Input.getInput("", "Y | N").toLowerCase().charAt(0);
+        } while (cKey != option1 && cKey != option2);
+
+        return cKey == option1;
+    }
 }

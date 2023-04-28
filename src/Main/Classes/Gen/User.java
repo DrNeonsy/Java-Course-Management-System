@@ -4,10 +4,12 @@ import Main.Classes.Spec.Administrator;
 import Main.Classes.Spec.Student;
 import Main.Classes.Spec.Teacher;
 import Main.Classes.Util.Input;
+import Main.Classes.Util.Util;
 import Main.Data.Course;
 import Main.Interfaces.IUsers;
 
 import static Main.Classes.App.Application.courses;
+import static Main.Classes.App.Application.users;
 
 public abstract class User implements IUsers {
     // ----------------------------------------
@@ -127,6 +129,14 @@ public abstract class User implements IUsers {
     public void showAccountInformation() {
         isAdmin = true;
         System.out.println(this);
+
+        if (Util.decision("Do You Want To Change Your Username Or Password? (Y | N)")) {
+            if (Util.decision("Do You Want To Change The Username (N For Password)? (Y | N)")) {
+                users.get(users.indexOf(this)).setUsername();
+            } else {
+                users.get(users.indexOf(this)).setPassword();
+            }
+        }
     }
 
     @Override
