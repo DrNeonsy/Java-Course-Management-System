@@ -1,0 +1,130 @@
+@startuml
+
+title Class Diagram
+
+class Main {
+    + main(args: String[]): void {static}
+}
+
+class Application {
+    - Administrator root {static}
+    + ArrayList<User> users {static}
+    + ArrayList<Course> courses {static}
+    - boolean initialized {static}
+
+    + init(): void {static}
+    + mainMenu(): void {static}
+    - login(): void {static}
+}
+
+abstract class User {
+    # String name
+    # String surname
+    # String email
+    # String password
+    # String username
+    # String role
+    - boolean isAdmin {static}
+
+    + mainMenu(): void
+    + showAccountInformation(): void
+    + showCourseAssignments(): void
+    + showCourseMembers(): void
+    - getValidInput(): String
+    - accountSetters(String message, String what, Function<String, Boolean> validationFunction): String
+    - accountSetters(int mode): void
+}
+
+class Student {
+    + ArrayList<String> options {static}
+}
+
+class Teacher {
+    + ArrayList<String> options {static}
+
+    - selectCourse(): int
+    - createOrDeleteExerciseHelper(int courseIndex, boolean isCreate): void
+    + createExercise(): void
+    + deleteExercise(): void
+    - selectCourseAndStudent(boolean shouldListStudents): int[]
+    + addStudent(): void
+    + removeStudent(): void
+}
+
+class Administrator {
+    + ArrayList<String> options {static}
+    - boolean isRoot {static}
+
+    + printAllCourses(): void
+    + printAllUsers(): void
+    + deleteUserAccount(): void
+    + createUserAccount(): void
+    - defineType(): User
+    + createNewCourse(): void
+    - courseSetters(String prompt, int minLength, int maxLength, Function<String, Boolean> validationFunction): String
+    - selectTeacher(): String
+    + deleteCourse(): void
+}
+
+enum Type {
+    STUDENT,
+    TEACHER,
+    ADMINISTRATOR,
+}
+
+class Input {
+    + isLengthInput(String input, int min, int max): boolean {static}
+    + isCharInputWithWhitespaces(String input): boolean {static}
+    + isCharInput(String input): boolean {static}
+    + isNumInput(String input): boolean {static}
+    + isCharNumInput(String input): boolean {static}
+    + isEmailInput(String input): boolean {static}
+    + isPasswordInput(String input): boolean {static}
+    + getInput(String message, String what): String {static}
+}
+
+class Util {
+    + isValidEnum(String value, Class<? extends Enum<?>> enumClass): boolean {static}
+    + decision(String msg): boolean {static}
+}
+
+!define RECORD_COLOR #FFA500
+!define RECORD_BORDER_COLOR #228B22
+!define RECORD_TEXT_COLOR #000000
+
+Class Course << (R,RECORD_COLOR) >> {
+    - String id
+    - String name
+    - String subject
+    - String teacher
+    - ArrayList<Student> students
+    - ArrayList<String> assignments
+}
+
+Interface IAdmins {
+    + printAllCourses(): void
+    + printAllUsers(): void
+    + createUserAccount(): void
+    + deleteUserAccount(): void
+    + createNewCourse(): void
+    + deleteCourse(): void
+}
+
+Interface ITeachers {
+    + createExercise(): void
+    + deleteExercise(): void
+    + addStudent(): void
+    + removeStudent(): void
+}
+
+Interface IUsers {
+    + showAccountInformation(): void
+    + showCourseAssignments(): void
+    + showCourseMembers(): void
+}
+
+footer
+Class File Overview Post Coding
+endfooter
+
+@enduml

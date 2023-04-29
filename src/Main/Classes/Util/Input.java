@@ -69,7 +69,8 @@ public class Input {
         return input.length() >= 8
                 && input.matches(".*[0-9].*")
                 && input.matches(".*[a-z].*")
-                && input.matches(".*[A-Z].*");
+                && input.matches(".*[A-Z].*")
+                && input.matches("^(?=.*[!@#$%^&*()_+\\-\\[\\]{};':\"\\\\|,.<>/?`~])(?!.* )(?!.*['\"]).*$");
     }
 
     // ----------------------------------------

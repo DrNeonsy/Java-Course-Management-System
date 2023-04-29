@@ -40,7 +40,7 @@ public class Administrator extends User implements IAdmins {
     // ----------------------------------------
 
     @Override
-    public void showAllCourses() {
+    public void printAllCourses() {
         if (!courses.isEmpty()) {
             this.setAdmin(true);
             for (Course course : courses) {
@@ -54,7 +54,7 @@ public class Administrator extends User implements IAdmins {
     }
 
     @Override
-    public void showAllUsers() {
+    public void printAllUsers() {
         this.setAdmin(true);
         for (User user : users) {
             System.out.println(user);
@@ -62,7 +62,7 @@ public class Administrator extends User implements IAdmins {
     }
 
     @Override
-    public void deleteAccount() {
+    public void deleteUserAccount() {
 
         if (users.size() > 1) {
             for (int i = 1; i < users.size(); i++) {
@@ -97,7 +97,7 @@ public class Administrator extends User implements IAdmins {
         }
     }
 
-    public void createAccount() {
+    public void createUserAccount() {
         System.out.println("Account Setup Initiated!\n");
 
         if (!isRoot) { // Default Execution For All IUsers Except Root
@@ -156,7 +156,7 @@ public class Administrator extends User implements IAdmins {
     }
 
     @Override
-    public void createCourse() {
+    public void createNewCourse() {
         System.out.println("Course Setup Initiated!");
 
         boolean teacherAvailable = false;

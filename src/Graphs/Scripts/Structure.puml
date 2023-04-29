@@ -1,0 +1,45 @@
+@startuml
+
+!define FOLDER folder
+!define FILE file
+
+FOLDER "src" {
+  FOLDER "Graphs" as Graphs {
+    FILE "Class Diagram.puml" as ClassDiagram
+    FILE "Structure.puml" as Structure
+  }
+
+  FOLDER "Main" as Main {
+    FILE "Main.java" as MainJava
+
+    FOLDER "Classes" as Classes {
+      FOLDER "App" as App {
+        FILE "Application.java" as Application
+      }
+      FOLDER "Gen" as Gen {
+        FILE "User.java" as User
+      }
+      FOLDER "Spec" as Spec {
+        FILE "Administrator.java" as Administrator
+        FILE "Student.java" as Student
+        FILE "Teacher.java" as Teacher
+      }
+      FOLDER "Util" as Util {
+        FILE "Input.java" as Input
+        FILE "Util.java" as UtilJava
+      }
+    }
+
+    FOLDER "Data" as Data {
+      FILE "Course.java" as Course
+    }
+
+    FOLDER "Interfaces" as Interfaces {
+      FILE "IAdmins.java" as IAdmins
+      FILE "ITeachers.java" as ITeachers
+      FILE "IUsers.java" as IUsers
+    }
+  }
+}
+
+@enduml

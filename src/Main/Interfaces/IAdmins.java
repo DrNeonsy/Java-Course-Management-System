@@ -1,15 +1,15 @@
 package Main.Interfaces;
 
 public interface IAdmins {
-    void showAllCourses();
+    void printAllCourses();
 
-    void showAllUsers();
+    void printAllUsers();
 
-    void createAccount();
+    void createUserAccount();
 
-    void deleteAccount();
+    void deleteUserAccount();
 
-    void createCourse();
+    void createNewCourse();
 
     void deleteCourse();
 }

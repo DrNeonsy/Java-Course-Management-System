@@ -19,15 +19,15 @@ public class Application {
     // ----------------------------------------
     // Methods
     // ----------------------------------------
-    public static void Init() {
+    public static void init() {
         if (!initialized) {
             System.out.println("Initializing...\n");
-            root.createAccount();
+            root.createUserAccount();
             initialized = true;
         }
     }
 
-    public static void MainMenu() {
+    public static void mainMenu() {
         while (true) {
             System.out.println("\nWelcome To The Main Menu!");
 
@@ -40,7 +40,7 @@ public class Application {
                     System.out.println("\nExiting...");
                     System.exit(0);
                 }
-                case "1" -> Login();
+                case "1" -> login();
                 default -> {
                     System.out.println("Invalid Input!");
                     System.out.printf("%n%s%n%n", "=".repeat(50));
@@ -49,7 +49,7 @@ public class Application {
         }
     }
 
-    private static void Login() {
+    private static void login() {
         System.out.println("\nWelcome To The Login Menu!");
 
         String username = Input.getInput("", "Username");
@@ -61,7 +61,7 @@ public class Application {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
                 System.out.println("\nLogin Successful!");
-                user.MainMenu();
+                user.mainMenu();
                 break;
             }
         }

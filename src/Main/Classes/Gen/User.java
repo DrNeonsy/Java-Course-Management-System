@@ -39,7 +39,7 @@ public abstract class User implements IUsers {
     // Menu
     // ----------------------------------------
 
-    public void MainMenu() {
+    public void mainMenu() {
         while (true) {
             // Start With Greeting The User
             System.out.printf("%n%s%n", "=".repeat(50));
@@ -110,11 +110,11 @@ public abstract class User implements IUsers {
 
             if (this instanceof Administrator a) {
                 switch (option) {
-                    case 4 -> a.showAllCourses();
-                    case 5 -> a.showAllUsers();
-                    case 6 -> a.createAccount();
-                    case 7 -> a.deleteAccount();
-                    case 8 -> a.createCourse();
+                    case 4 -> a.printAllCourses();
+                    case 5 -> a.printAllUsers();
+                    case 6 -> a.createUserAccount();
+                    case 7 -> a.deleteUserAccount();
+                    case 8 -> a.createNewCourse();
                     case 9 -> a.deleteCourse();
                 }
             }

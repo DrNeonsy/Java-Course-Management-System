@@ -1,0 +1,20 @@
+@startuml
+
+abstract class Users
+interface IUsers
+class Administrator
+class Teacher
+class Student
+
+IUsers <|.. Users
+Administrator --|> Users
+Teacher --|> Users
+Student --|> Users
+
+interface IAdmins
+interface ITeachers
+
+Administrator ..|> IAdmins
+Teacher ..|> ITeachers
+
+@enduml
